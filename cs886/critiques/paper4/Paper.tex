@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage{fullpage}
 
 \usepackage{color}
@@ -22,24 +22,30 @@ University of Waterloo\\
 \maketitle
 
 \section{Overview}
+The paper starts off by explaining why supervised learning learn and recognize natural scene categories is no longer a desirable approach. The main reason is
+that supervised learning in that case depends on the manual annotation of intermediate properties of natural scenes to be able to come up with a categorization
+scheme for the images under analysis. Of course, manual image annotation is both a tedious and an expensive task to do. In addition, exper-defined labels are
+some what arbitrary and possibly sub-optimal.
 
-    * What's the paper about?
-    * What are the contributions?
-    * What's the take home message?
+The main contribution of the paper is providing a Bayesian hierarchical model to learn and recognize natural scene categories without supervision. The authors
+extended the notion of a \textbf{texton} (i.e. codeword) from texture and material literature and apply it to images. The algorithm starts by giving a label
+to the image (manually). The image is then classified based on how many codewords from a specific category (the set of categories depend on the category
+label given to the image) are found in it. The process goes on until all training images are processed. Then, the process of recognizing natural scenes from
+test images starts (in a similar fashion, only that it's the category label that we're after).
 
 \section{Significance and Originality}
+The paper can be considered as an extension/application of the idea of using \textbf{textons}, in the context of natural scene categorization. The novelity of
+the approach is that it reduces the dependence on human effort compared to previous methods that follow a supervised learning approach.
 
-* Are the ideas novel/original?
-* Are the contributions significant?
-
-\section{Soundness}
-* Are the ideas presented technically correct?
-* Are the proofs accurate?
-* Are the algorithms correct?
+The citation count of the paper (around 500) also suggest that the paper is heavily referred to in the field. This certainly shows how significant the
+contributions of the paper are.
 
 \section{Evaluation}
 * Are the ideas/algorithms empirically or theoretically evaluated?
+
 * If some assumptions are made, are they realistic?
+ (although I did not see in their paper referenecs to back up this claim)
+
 * Is scalability demonstrated?
 
 \section{Related Work}
@@ -55,7 +61,16 @@ University of Waterloo\\
 * Is the paper well written?
     * Are all the technical terms and abreviations explained?
     * Are there important grammatical errors?
-    * Are there a lot of typos?
+    * Are there a lot of typos? just one in page 5
+
+\section{Comments}
+Although the authors claim that the learning process is an unsupervised/automatic process, they still depend on human efforts to assign the category labels for
+the training images. This step is crucial for the algorithm, otherwise the algorithm will not be able to decide which set of codewords it should mark as
+\textbf{relevant}.
+
+\section{Suggestions}
+An improvement on the way of assigning a category label for the training images can be achieved by following the same logic the algorithm uses to generate the
+codebook. In other words, each training image can be divided into patches (i.e. codewords)
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
