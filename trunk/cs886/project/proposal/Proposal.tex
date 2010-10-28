@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fullpage}
+
+\usepackage{color}
+\usepackage[pdftex]{hyperref}
+\usepackage{url}
+
+\begin{document}
+
+\centerline{\sc \large \textbf{Using Bayesian Learning to Estimate How Hot an Execution Path is}}
+\centerline{\textbf{Project Proposal}}
+\centerline{\textbf{CS886 - Fall 2010}}
+\centerline{\textbf{Karim Ali}}
+\vspace{2pc}
+
+\section{Problem Domain}
+In the domain of program analysis, it is always advised to perform code optimizations to the paths that have higher likelihood of occuring in a given run of
+the program. This prioritization process can be tackled by identifying hot paths (paths of high frequency of execution) and cold paths (paths of low frequency
+of execution) \cite{baba2007design, ball1996efficient, duesterwald2000software, merten1999hardware}. The importance of identifying hot paths arises from the
+empirical observation that most or all of the execution time of a typical program is spent along a small percentage of program paths (i.e. hot paths).
+
+\section{Existing Solutions}
+Static profiling has been commonly used in the literature to identify hot paths. Although static profiling can be very useful and successful, it faces many
+practical challenges:
+\begin{enumerate}
+  \item the frequent lack of appropriate workloads for programs,
+  \item the questionable degree to which they are indicative of actual usage,
+  \item the inability of such tools evaluate program modules or individual paths in isolation,
+  \item and the extra work done by the programmer/developer to write code that generates program profiles.
+\end{enumerate}
+
+Analyzing additional information, e.g data flow analysis \cite{boogerd2008use},  is also a common practice that helps identify hot paths.
+
+\section{Interesting Solution}
+Raymond Buse and Westley Weimer \cite{buse2009road} propose a very interesting approach to the problem of hot paths identification. The proposed solution is
+modelled as a classification problem, where a path is classified as \textsf{high frequency}, or \textsf{low frequency}. They used a Bayesian classifier for the
+learning process, where the classifier is trained by analyzing a set of feature-vectors. Each feature-vector consists of the numerical counts of occurances of
+features that the authors considered sufficient to capture the state changing behavior related to path frequency.
+
+\section{Project Idea}
+I would like to investigate the work done in \cite{buse2009road} more, since they did not provide enough explanation for their Bayesian learning process. I
+would also like to survey similar methods used to identify hot paths. Based on my findings from investigating the work in \cite{buse2009road} and other
+literature, I would like to improve on those techniques and push them one step further.
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+\nocite{*}
+
+\end{document}
+
+
