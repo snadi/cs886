@@ -34,16 +34,16 @@ ReadWrite=true
 
 [item:Paper.tex]
 archive=true
-column=74
+column=38
 encoding=UTF-8
 highlight=LaTeX
-line=63
+line=11
 mode=LaTeX
 open=true
 order=0
 
 [item:paper4.kilepr]
-archive=true
+archive=false
 column=167281776
 encoding=
 highlight=
@@ -63,8 +63,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:Paper.tex]
-CursorColumn=74
-CursorLine=63
+CursorColumn=38
+CursorLine=11
 
 [view-settings,view=0,item:references.bib]
 CursorColumn=22
