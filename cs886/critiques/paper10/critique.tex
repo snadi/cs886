@@ -15,11 +15,11 @@
 
 \section{Overview}
 The authors start their paper by discussing the evolution of the Hidden Markov Model (HMM) to the Factorial Hidden Markov Model (FHMM). The main reason
-behind this extension is the HMM's limited representational power of latent variables in modeling discrete time series data. To overcome this, the FHMM factors
-each hidden state into multiple hidden (i.e. latent) state variables. In other words, FHMM formally defines \textit{M} latent variables as \textit{M} latent
-Markov chains that evolve according to Markov dynamics at each timestep \textit{t}. Although this strengthens the representational power of the FHMM for latent
-variables, it introduces a new free parameter \textit{M}. What the authors are after is \textbf{learning this parameter from data rather than specifying it
-beforehand} (Section 1, page 2, end of first paragraph).
+behind this extension is the HMM's limited representational power of latent variables in modeling discrete time series data (e.g. part-of-speech tagging,
+dialogue segmentation). To overcome this, the FHMM factors each hidden state into multiple hidden (i.e. latent) state variables. In other words, FHMM formally
+defines \textit{M} latent variables as \textit{M} latent Markov chains that evolve according to Markov dynamics at each timestep \textit{t}. Although this
+strengthens the representational power of the FHMM for latent variables, it introduces a new free parameter \textit{M}. What the authors are after is
+\textbf{learning this parameter from data rather than specifying it beforehand} (Section 1, page 2, end of first paragraph).
 
 The main contribution of the paper is presenting a non-parametric FHMM, Infinite FHMM (iFHMM), that is based on a new stochastic process for latent feature
 representation of time series called the Markov Indian Buffet Process (mIBP). The mIBP can be dervied in three steps (Section 2):
@@ -69,20 +69,27 @@ as follows:
 poor performance of naive Gibbs sampler; dynamic programming does not perform better than blocked Gibbs sampler; the bulk of computation is used for estimating
  \textit{X} and \textit{W}.
  \item Much more information was needed about the dataset used for the experiments. For example, which speakers were used as the dataset (there're 34 speakers
-in the original dataset); the randomness of the artificial pauses; how long the sentence were; was ther any background noise in the speech; how the input from
-different mics was merged together to form the speech of one speaker.
+in the original dataset); the randomness of the artificial pauses; how long the sentence were; was ther any background noise in the speech.
+ \item The authors did not discuss the complexity of their algorithms, or how much CPU time they consume on average.
+ \item I was very surprised when I did not find any comparison with other existing blind source (or speech in their case) separation algorithms.
+ \item The results obtained using 3 microphones cannot be compared to those obtained using 10 microphones since the authors \textbf{subsampled a noiseless
+version of the data} for the former case (Section 4, end of page 7).
 \end{itemize}
 
-
-
 \section{Related Work}
-7/14 references are self references.
-
+The authors did not mention what other algorithms, methods or techniques are used for blind source separation. They only discussed the work on which they based
+their processes. It is very interesting to note that 50\% (7 out of 14) of the references had at least one of the authors as a co-author. I think they should
+have discussed other people's work rather self-referencing their own previous work, eventhough this paper builds on top of it.
 
 \section{Readability}
-
+The paper was mostly well written with few typos and some punctual errors related to the use of contractions (i.e. don't, shouldn't, etc). One confusing
+readibility issue that did not leave me at ease is in (Section 2.2, page 3) when they refer to the \textbf{author's website} without giving any reference to
+it. I found out later (after another reference at the end of Section 3.2, page 6) that they meant the first author whose website was provided as a footnote in
+the first page.
 
 \section{Suggestions}
-
+I think it was a poor choice to publish this paper as a conference paper rather than a journal paper. Most of my comments are related to missing information
+that are essential to understand the work of the authors better. In addition, more experiments should be done to evaluate such work and compare it to other
+blind source separation algorithms.
 
 \end{document}
