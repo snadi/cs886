@@ -1,0 +1,4 @@
+1) Receive input folder (can contain jar/.class/.java files)
+2) Generate cfg for each class from the input
+3) Extract the features of each path for each cfg
+4) Format it as arrf/xrrf (whatever is easier)
