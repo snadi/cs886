@@ -1,0 +1,135 @@
+
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} 
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% As of 2010, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2010} with
+% \usepackage[nohyperref]{icml2010} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\usepackage[accepted]{icml2010}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Title}
+
+\begin{document} 
+
+\twocolumn[
+\icmltitle{Using Bayesian networks to predict changes}
+
+
+\icmlauthor{Sarah Nadi}{snadi@uwaterloo.ca}
+\icmladdress{University of Waterloo,
+            Waterloo, ON, Canada}
+
+\vskip 0.3in
+]
+
+\begin{abstract} 
+STILLLL
+\end{abstract} 
+
+\section{Introduction}
+\label{intro}
+
+Changes 
+
+\begin{algorithm}[tb]
+   \caption{Bubble Sort}
+   \label{alg:example}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} data $x_i$, size $m$
+   \REPEAT
+   \STATE Initialize $noChange = true$.
+   \FOR{$i=1$ {\bfseries to} $m-1$}
+   \IF{$x_i > x_{i+1}$} 
+   \STATE Swap $x_i$ and $x_{i+1}$
+   \STATE $noChange = false$
+   \ENDIF
+   \ENDFOR
+   \UNTIL{$noChange$ is $true$}
+\end{algorithmic}
+\end{algorithm}
+ 
+
+\begin{table}[t]
+\caption{Classification accuracies for naive Bayes and flexible 
+Bayes on various data sets.}
+\label{sample-table}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lcccr}
+\hline
+\abovespace\belowspace
+Data set & Naive & Flexible & Better? \\
+\hline
+\abovespace
+Breast    & 95.9$\pm$ 0.2& 96.7$\pm$ 0.2& $\surd$ \\
+Cleveland & 83.3$\pm$ 0.6& 80.0$\pm$ 0.6& $\times$\\
+Glass2    & 61.9$\pm$ 1.4& 83.8$\pm$ 0.7& $\surd$ \\
+Credit    & 74.8$\pm$ 0.5& 78.3$\pm$ 0.6&         \\
+Horse     & 73.3$\pm$ 0.9& 69.7$\pm$ 1.0& $\times$\\
+Meta      & 67.1$\pm$ 0.6& 76.5$\pm$ 0.5& $\surd$ \\
+Pima      & 75.1$\pm$ 0.6& 73.9$\pm$ 0.5&         \\
+\belowspace
+Vehicle   & 44.9$\pm$ 0.6& 61.5$\pm$ 0.4& $\surd$ \\
+\hline
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table}
+
+
+
+\section{Related Work}
+\label{rel-work}
+
+Mirarab et al.~\cite{mirarab2007} investigate the same problem as our work. However, their work is on the level of source code changes. They build three
+different Bayesian Networks, one that is based on package and class dependency information (static relationships), one which is dependent on historical
+co-changes, and one which uses both. For the first graph, the initial structure is essentially ``given'' according to the static dependencies, and then the CPTs
+are learnt using the importance sampling algorithm proposed by Changhe and Marek~\cite{yuan2003importance}. The way static dependencies are defined in their
+case is specific to Java. The third one is essentially the first graph, but updated using the historic change information according to the Expectation
+Maximization (EM) algorithm~\cite{dempster1977maximum}. The second was solely based on historic information where the network is build using a greedy structure
+ learning algorithm~ \cite{friedman1996learning}. They did some preprocessing to their data such as filtering out large changes (with more than 30 elements
+changed at once) since this was probably an insignificant change.
+
+Zhou et al.~\cite{zhou2008} try to answer a slightly different problem. They do not only look at the probability of other elements changing given a specific
+element, they also add features such as authors, change significance levels etc. and try to predict if two elements are co-changes or not accordingly. Thus,
+their problem is more of a classification problem where given two elements, and some observed features they try to determine the class as co_changes or not.
+They use the K2 algorithm proposed by Cooper et. al~\cite{cooper1992bayesian}.
+
+\section{Building the model}
+\label{sec:model}
+
+\section{Experimental Work}
+\label{sec:exp}
+
+\section{Conclusion}
+\label{concl}
+
+
+\bibliography{references}
+\bibliographystyle{icml2010}
+
+\end{document} 
+
+

@@ -1,0 +1,100 @@
+
+@inproceedings{nadi2010,
+ title={{Does the past say it all? Using history to predict change sets in a CMDB}},
+  author={Nadi, S. and Holt, R. and Mankovskii, S.},
+ booktitle = {CSMR'10: Proceedings of the 14th European Conference on Software Maintenance and Reengineering},
+ year = {2010},
+ address = {Madrid, Spain}
+ }
+
+@inproceedings{mirarab2007,
+author={Mirarab, S. and Hassouna, A. and Tahvildari, L.},
+journal={ ICPC '07: Proceedings of the 15th IEEE International Conference on Program Comprehension}, 
+title={Using Bayesian Belief Networks to Predict Change Propagation in Software Systems},
+year={2007},
+month={jun.},
+pages={177 -188},
+ISSN={1063-6897}
+}
+
+@conference{yuan2003importance,
+  title={{An importance sampling algorithm based on evidence pre-propagation}},
+  author={Yuan, C. and Druzdzel, M.J.},
+  booktitle={Proceedings of the 19th Annual Conference on Uncertainty on Artificial Intelligence},
+  pages={624--631},
+  year={2003},
+  organization={Citeseer}
+}
+
+
+@article{dempster1977maximum,
+  title={{Maximum likelihood from incomplete data via the EM algorithm}},
+  author={Dempster, A.P. and Laird, N.M. and Rubin, D.B. and others},
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  volume={39},
+  number={1},
+  pages={1--38},
+  issn={0035-9246},
+  year={1977},
+  publisher={Royal Statistical Society}
+}
+
+@article{zhou2008,
+author = {Yu Zhou and Michael W\"{u}rsch and Emanuel Giger and Harald C. Gall and Jian L?},
+title = {A Bayesian Network Based Approach for Change Coupling Prediction},
+journal ={Reverse Engineering, Working Conference on},
+volume = {0},
+issn = {1095-1350},
+year = {2008},
+pages = {27-36},
+doi = {http://doi.ieeecomputersociety.org/10.1109/WCRE.2008.39},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA}}
+
+@article{friedman2000using,
+  title={{Using bayesian networks to analyze expression data}},
+  author={Friedman, N. and Linial, M. and Nachman, I. and Pe'er, D.},
+  journal={Journal of computational biology},
+  volume={7},
+  number={3-4},
+  pages={601--620},
+  year={2000},
+  publisher={Mary Ann Liebert, Inc.}
+}
+
+@article{friedman1996learning,
+  title={{Learning Bayesian Networks with Local Structure}},
+  author={Friedman, N. and Goldzsmidt, M.},
+  year={1996}
+}
+
+
+@article{tang2007using,
+  title={{Using Bayesian belief networks for change impact analysis in architecture design}},
+  author={Tang, A. and Nicholson, A. and Jin, Y. and Han, J.},
+  journal={Journal of Systems and Software},
+  volume={80},
+  number={1},
+  pages={127--148},
+  year={2007},
+  publisher={Elsevier}
+}
+
+@article{wong-change,
+  title={{Change Impact Analysis with Stochastic Dependencies}},
+  author={Wong, S. and Cai, Y. and Dalton, M.},
+journal = {submitted to ICSE 2011}
+}
+
+@article{cooper1992bayesian,
+  title={{A Bayesian method for the induction of probabilistic networks from data}},
+  author={Cooper, G.F. and Herskovits, E.},
+  journal={Machine learning},
+  volume={9},
+  number={4},
+  pages={309--347},
+  issn={0885-6125},
+  year={1992},
+  publisher={Springer}
+}
+
