@@ -1,0 +1,13 @@
+Model:
+Jan08- March 08
+Only CIs that appeared 10 or more times included
+1291 observations
+159 distinct CIs
+
+K2 model used - 5 parents
+Simple Estimator used
+
+
+Testing:
+
+March 1 2008 - April 1 2008  (471 reports)
