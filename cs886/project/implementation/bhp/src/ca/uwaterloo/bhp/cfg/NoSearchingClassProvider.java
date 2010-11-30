@@ -1,4 +1,4 @@
-package ca.uwaterloo.bhp.cfg;
+package ca.uwaterloo.bhp.preprocessing;
 
 import java.io.File;
 import java.io.FileInputStream;
