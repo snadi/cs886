@@ -27,8 +27,12 @@ public class DataPreprocessor {
 		// Load the classes
 		Collection<SootClass> inputClasses = loadClasses(inputDirectory);
 		
-		// Construct the control flow graph for the input lasses
-		Collection<BriefBlockGraph> cfgList = CfgGenerator.generate(inputClasses);
+		// For each soot class, generate cfgs for its methods, and process them
+		for(SootClass sc : inputClasses){
+			for(BriefBlockGraph cfg : CfgGenerator.generate(sc)){
+				
+			}
+		}
 		
 	}
 	
