@@ -26,28 +26,8 @@ public class DataPreprocessor {
 		Collection<SootClass> inputClasses = loadClasses(inputDirectory);
 		
 		// Construct the control flow graph for the input lasses
-		Collection<BriefBlockGraph> cfgList = constructCFG(inputClasses);
+		Collection<BriefBlockGraph> cfgList = CfgGenerator.generate(inputClasses);
 		
-	}
-	
-	private static BriefBlockGraph constructCFG(SootMethod method) {
-		return new BriefBlockGraph(method.retrieveActiveBody());
-	}
-	
-	private static BriefBlockGraph constructCFG(SootClass sc) {
-	    
-		return new BriefBlockGraph(sc.getMethodByName("charAt").retrieveActiveBody());
-	}
-	
-	private static Collection<BriefBlockGraph> constructCFG(Collection<SootClass> classes){
-		Collection<BriefBlockGraph> result = new ArrayList<BriefBlockGraph>();
-		
-		for(SootClass sc : classes) {
-			BriefBlockGraph graph = constructCFG(sc);
-			result.add(graph);
-		}
-		
-		return result;
 	}
 	
 	private static SootClass loadClassByCanonicalName(String className) {
@@ -59,8 +39,8 @@ public class DataPreprocessor {
 		return sc;
 	}
 	
-	private static Collection<SootClass> generateSootClasses() {
-		// Generate SootClasses for the input files
+	private static Collection<SootClass> loadSootClasses() {
+		// Load SootClasses for the input files
 		Collection<SootClass> classes = new ArrayList<SootClass>();
 	    for(String className : _provider.getClassNames()) {
 	    	_scene.loadClass(className, SootClass.SIGNATURES);
@@ -88,7 +68,7 @@ public class DataPreprocessor {
     		}
     	}
 		
-		return generateSootClasses();
+		return loadSootClasses();
 	}
 	
 	private static void init() {
