@@ -6,19 +6,43 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import ca.uwaterloo.bhp.cfg.CfgGenerator;
-
 import soot.ClassProvider;
 import soot.G;
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.toolkits.graph.BriefBlockGraph;
+import ca.uwaterloo.bhp.cfg.CfgGenerator;
+import ca.uwaterloo.bhp.cfg.CfgWalker;
+import ca.uwaterloo.bhp.cfg.ExecutionPath;
+import ca.uwaterloo.bhp.cfg.FeatureExtractor;
 
 public class DataPreprocessor {
 	
 	private static NoSearchingClassProvider _provider;
 	private static Scene _scene;
+	
+	public static void main(String args[]) {
+		init();
+		SootClass sc = loadClassByCanonicalName("java.lang.String");
+		
+		SootMethod m = new SootMethod("", sc.getMethodByName("charAt").getParameterTypes(), sc.getMethodByName("charAt").getReturnType());
+		for(SootMethod method : sc.getMethods()) {
+			if(method.getName().equalsIgnoreCase("charAt")) {
+				m = method;
+				break;
+			}
+		}
+		
+		BriefBlockGraph cfg = CfgGenerator.generate(m);
+		
+		for(ExecutionPath path : CfgWalker.process(cfg)) {
+			System.out.println(path.pathToString());
+			FeatureExtractor.extractFeatures(path);
+			System.out.println(path.featuresToString());
+			System.out.println("=============================================================");
+		}
+	}
 	
 	public static void run(String inputDirectory) throws IOException {
 		// Initialize some parameters for Soot
@@ -27,13 +51,21 @@ public class DataPreprocessor {
 		// Load the classes
 		Collection<SootClass> inputClasses = loadClasses(inputDirectory);
 		
+		// Generate the features
+		generateFeatures(inputClasses);
+	}
+	
+	private static void generateFeatures(Collection<SootClass> inputClasses) {
 		// For each soot class, generate cfgs for its methods, and process them
 		for(SootClass sc : inputClasses){
 			for(BriefBlockGraph cfg : CfgGenerator.generate(sc)){
+				Collection<ExecutionPath> paths = CfgWalker.process(cfg);
 				
+				for(ExecutionPath path : paths) {
+					FeatureExtractor.extractFeatures(path);
+				}
 			}
 		}
-		
 	}
 	
 	private static SootClass loadClassByCanonicalName(String className) {
@@ -55,6 +87,9 @@ public class DataPreprocessor {
 	    	sc.setApplicationClass();
 	    	classes.add(sc);
 	    }
+	    
+	    // Set the class provider for Soot
+		soot.SourceLocator.v().setClassProviders(Collections.singletonList((ClassProvider) _provider));
 		
 	    //addCommonDynamicClasses(_scene, _provider);
 		_scene.loadNecessaryClasses();
@@ -84,8 +119,5 @@ public class DataPreprocessor {
 		// Create the Soot-related members
 		_provider = new NoSearchingClassProvider();
 		_scene = Scene.v();
-
-		// Set the class provider for Soot
-		soot.SourceLocator.v().setClassProviders(Collections.singletonList((ClassProvider) _provider));
 	}
 }

@@ -3,8 +3,8 @@ package ca.uwaterloo.bhp.cfg;
 public enum FeatureName {
 	EQUAL("=="),
 	NEW("new"),
-	THIS("this"),
-	VARIABLES("vars"),
+	//THIS("this"),
+	//VARIABLES("vars"),
 	ASSIGNMENTS("="),
 	DEREFERNCES("."),
 	FIELDS("fields"),
@@ -13,8 +13,8 @@ public enum FeatureName {
 	GOTO("goto"),
 	IF("if"),
 	LOCAL_VARIABLES("local variables"),
-	PARAMETERS("params"),
-	RETURNS("return statements"),
+	//PARAMETERS("params"),
+	//RETURNS("return statements"),
 	STATEMENTS("statements"),
 	THROWS("throw statements");
 	
