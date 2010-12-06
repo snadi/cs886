@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import soot.toolkits.graph.Block;
+import weka.core.Attribute;
+import weka.core.FastVector;
 
 public class ExecutionPath {
 	
@@ -48,6 +50,33 @@ public class ExecutionPath {
 			str.append(", ");
 		}
 		return str.replace(str.lastIndexOf(","), str.lastIndexOf(" "), "").toString();
+	}
+	
+	public double[] featuresToArray() {
+		double[] result = new double[features.size()];
+		int i = 0;
+		for(Feature feature : features.values()) {
+			result[i++] = feature.getCount();
+		}
+		return result;
+	}
+	
+	public static FastVector getAttributes(HashMap<FeatureName, Feature> features) {
+		FastVector attributes = new FastVector(features.size() + 1);
+		
+		// Add attributes for all features
+		for(FeatureName featureName : features.keySet()) {
+			attributes.addElement(new Attribute(featureName.name()));
+		}
+		
+		// Add the nominal attribute "class"
+		FastVector nominalValues = new FastVector(2);
+		nominalValues.addElement("hot");
+		nominalValues.addElement("cold");
+		Attribute classification = new Attribute("class", nominalValues);
+		attributes.addElement(classification);
+		
+		return attributes;
 	}
 	
 }

@@ -3,6 +3,8 @@ package ca.uwaterloo.bhp.weka;
 import java.io.IOException;
 import java.util.Collection;
 
+import weka.core.FastVector;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import ca.uwaterloo.bhp.cfg.ExecutionPath;
@@ -14,12 +16,12 @@ public class ArffWriter extends ArffSaver {
 	private Collection<ExecutionPath> executionPaths;
 	private Instances instances;
 
-	public ArffWriter(String dir, String className, String methodName, Collection<ExecutionPath> executionPaths) {
+	public ArffWriter(String dir, String className, int methodName, Collection<ExecutionPath> executionPaths) {
 		super();
 		setFileExtension(Instances.FILE_EXTENSION);
 		setDir(dir);
 		setFilePrefix(className);
-		setDirAndPrefix(methodName, "");
+		setDirAndPrefix(String.valueOf(methodName), "");
 		this.executionPaths = executionPaths;
 		
 		// Create the instances based on the execution paths
@@ -27,15 +29,24 @@ public class ArffWriter extends ArffSaver {
 	}
 	
 	private void createInstances() {
-		String relationName = retrieveFile().getName();
-		
+		String relationName = retrieveFile().getName();		
+		FastVector attributeInfo = ExecutionPath.getAttributes(executionPaths.iterator().next().features());
 		int capacity = executionPaths.size();
 		
-		instances = new Instances(relationName, attInfo, capacity);
+		instances = new Instances(relationName, attributeInfo, capacity);
+		
+		for(ExecutionPath path : executionPaths) {
+			Instance instance = new Instance(1, path.featuresToArray());
+			instances.add(instance);
+		}
 	}
 	
 	public void write() throws IOException {
 		writeBatch();
+	}
+	
+	public Instances instances() {
+		return instances;
 	}
 
 }
