@@ -12,7 +12,7 @@ public enum FeatureName {
 	INVOCATIONS("invocations"),
 	GOTO("goto"),
 	IF("if"),
-	LOCAL_VARIABLES("local variables"),
+	LOCALS("local variables"),
 	//PARAMETERS("params"),
 	//RETURNS("return statements"),
 	STATEMENTS("statements"),

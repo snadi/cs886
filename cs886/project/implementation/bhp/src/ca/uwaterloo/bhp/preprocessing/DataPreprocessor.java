@@ -12,11 +12,11 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.toolkits.graph.BriefBlockGraph;
-import weka.core.converters.ArffSaver;
 import ca.uwaterloo.bhp.cfg.CfgGenerator;
 import ca.uwaterloo.bhp.cfg.CfgWalker;
 import ca.uwaterloo.bhp.cfg.ExecutionPath;
 import ca.uwaterloo.bhp.cfg.FeatureExtractor;
+import ca.uwaterloo.bhp.weka.ArffWriter;
 
 public class DataPreprocessor {
 	
@@ -37,14 +37,16 @@ public class DataPreprocessor {
 		String outputDirectory = System.getProperty("user.dir") + File.separator + "cs886";
 		BriefBlockGraph cfg = CfgGenerator.generate(m);
 		
-		System.out.println(sc.getName().replaceAll("\\.", "_"));
-		System.out.println(cfg.getBody().getMethod().getNumber());
+		Collection<ExecutionPath> paths = CfgWalker.process(cfg); 
 		
-		for(ExecutionPath path : CfgWalker.process(cfg)) {
+		for(ExecutionPath path : paths) {
 			//System.out.println(path.pathToString());
 			FeatureExtractor.extractFeatures(path);
 			System.out.println(path.featuresToString());
 		}
+		
+		ArffWriter writer = new ArffWriter(outputDirectory, sc.getName().replaceAll("\\.", "_"), cfg.getBody().getMethod().getNumber(), paths);
+		System.out.println(writer.instances().toString());
 	}
 	
 	public static void run(String inputDirectory, String outputDirectory) throws IOException {

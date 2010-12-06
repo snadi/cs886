@@ -57,7 +57,7 @@ public class FeatureExtractor {
 				path.features().get(FeatureName.IF).incrementCount(countIf(unit));
 				
 				// If statements
-				path.features().get(FeatureName.LOCAL_VARIABLES).incrementCount(countLocal(unit));
+				path.features().get(FeatureName.LOCALS).incrementCount(countLocal(unit));
 				
 				// Statements
 				path.features().get(FeatureName.STATEMENTS).incrementCount();
