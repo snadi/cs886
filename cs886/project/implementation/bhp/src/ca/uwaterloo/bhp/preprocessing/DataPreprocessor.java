@@ -12,6 +12,7 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.toolkits.graph.BriefBlockGraph;
+import weka.core.converters.ArffSaver;
 import ca.uwaterloo.bhp.cfg.CfgGenerator;
 import ca.uwaterloo.bhp.cfg.CfgWalker;
 import ca.uwaterloo.bhp.cfg.ExecutionPath;
@@ -33,18 +34,20 @@ public class DataPreprocessor {
 				break;
 			}
 		}
-		
+		String outputDirectory = System.getProperty("user.dir") + File.separator + "cs886";
 		BriefBlockGraph cfg = CfgGenerator.generate(m);
 		
+		System.out.println(sc.getName().replaceAll("\\.", "_"));
+		System.out.println(cfg.getBody().getMethod().getNumber());
+		
 		for(ExecutionPath path : CfgWalker.process(cfg)) {
-			System.out.println(path.pathToString());
+			//System.out.println(path.pathToString());
 			FeatureExtractor.extractFeatures(path);
 			System.out.println(path.featuresToString());
-			System.out.println("=============================================================");
 		}
 	}
 	
-	public static void run(String inputDirectory) throws IOException {
+	public static void run(String inputDirectory, String outputDirectory) throws IOException {
 		// Initialize some parameters for Soot
 		init();
 		
@@ -52,7 +55,7 @@ public class DataPreprocessor {
 		Collection<SootClass> inputClasses = loadClasses(inputDirectory);
 		
 		// Generate the features
-		generateFeatures(inputClasses);
+		generateFeatures(inputClasses);		
 	}
 	
 	private static void generateFeatures(Collection<SootClass> inputClasses) {
@@ -60,9 +63,12 @@ public class DataPreprocessor {
 		for(SootClass sc : inputClasses){
 			for(BriefBlockGraph cfg : CfgGenerator.generate(sc)){
 				Collection<ExecutionPath> paths = CfgWalker.process(cfg);
-				
+				sc.getName();
+				cfg.getBody().getMethod().getName();
 				for(ExecutionPath path : paths) {
+					//System.out.println(path.pathToString());
 					FeatureExtractor.extractFeatures(path);
+					System.out.println(path.featuresToString());
 				}
 			}
 		}

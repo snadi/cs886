@@ -41,10 +41,10 @@ public class ExecutionPath {
 	
 	public String featuresToString() {
 		StringBuffer str = new StringBuffer();
-		for(FeatureName f : features.keySet()) {
-			str.append(features.get(f).getName());
-			str.append("=");
-			str.append(features.get(f).getCount());
+		for(Feature feature : features.values()) {
+			//str.append(feature.getName());
+			//str.append("=");
+			str.append(feature.getCount());
 			str.append(", ");
 		}
 		return str.replace(str.lastIndexOf(","), str.lastIndexOf(" "), "").toString();
