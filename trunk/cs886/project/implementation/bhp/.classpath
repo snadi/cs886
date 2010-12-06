@@ -3,7 +3,15 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jasminclasses-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/soot-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/weka.jar"/>
+	<classpathentry kind="lib" path="lib/soot-2.4.0.jar" sourcepath="/home/karim/Academic/Fall 2010/cs886/project/tools/sootall-2.4.0/soot-2.4.0/src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/karim/Academic/Fall 2010/cs886/project/tools/sootall-2.4.0/soot-2.4.0/doc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/weka.jar" sourcepath="/home/karim/Academic/Fall 2010/cs886/project/tools/weka-3-6-3/weka-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/karim/Academic/Fall 2010/cs886/project/tools/weka-3-6-3/doc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
