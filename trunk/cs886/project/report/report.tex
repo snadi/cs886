@@ -1,0 +1,99 @@
+\documentclass[12pt,journal,letterpaper,compsoc]{IEEEtran}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{clrscode}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{color}
+\usepackage{balance}
+
+\begin{document}
+
+\title{}
+
+\author{Karim Ali\\
+\{karim\}@cs.uwaterloo.ca \\
+David R. Cheriton School of Computer Science\\
+University of Waterloo\\
+}
+
+% The paper headers
+\markboth{CS886 Project Report - Active Contour without Edges}%
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+
+\IEEEcompsoctitleabstractindextext{%
+\begin{abstract}
+%\boldmath
+The abstract goes here.
+\end{abstract}
+}
+
+\maketitle
+
+% # Introduction
+%     * What is the problem?
+%     * Why is it an important problem?
+% 
+% # Techniques to tackle the problem
+%     * Brief survey of previous work concerning this problem (i.e., the 4-8 papers that you read)
+%     * Brief description of the techniques chosen and why
+% 
+% # Empirical evaluation
+%     * Compare empirically the techniques for complexity, performance, ease of use, etc.
+% 
+% # Conclusion:
+%     * What is the best technique?
+%     * Is any technique good enough to declare the problem solved?
+%     * What future research do you recommend?
+
+\section{Introduction}
+\label{sec:intro}
+
+\section{Background}
+\label{sec:bg}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=6cm]{fitting.png}
+\caption{Chan-Vese Curve Fitting}
+\label{fig:fitting}
+\end{figure}
+
+\section{Implementation}
+\label{sec:implementation}
+
+\section{Experimental Results}
+\label{sec:results}
+
+\begin{table*}[h!t!]
+\centering
+\begin{tabular}{ c | c |c}
+\textbf{Criteria} & \textbf{Goal} & \textbf{Applies to Model}\\
+\hline\hline
+Detecting Boundaries & Ability to correctly detect object boundaries of simple objects& Both Models\\
+\hline
+\end{tabular}
+\centering
+\caption{Evaluation Criteria}
+\label{tab:criteria}
+\end{table*}
+
+\section{Difficulties and Discussion}
+\label{sec:difficulties}
+
+\section{Conclusion}
+\label{sec:conc}
+The conclusion goes here.
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+% insert where needed to balance the two columns on the last page with
+% biographies
+%\newpage
+
+\end{document}
