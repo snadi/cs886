@@ -4,6 +4,13 @@ import java.io.File;
 
 public class Directory {
 	
+	public static final String DIRECTORY = System.getProperty("user.dir") + File.separator + "cs886";
+	public static final String INPUT_DIRECTORY = DIRECTORY + File.separator + "input";
+	public static final String LIBRARY_DIRECTORY = INPUT_DIRECTORY + File.separator + "lib";
+	public static final String ARFF_DIRECTORY = DIRECTORY + File.separator + "arff";
+	public static final String OBSERVATIONS_DIRECTORY = ARFF_DIRECTORY + File.separator + "observations";
+	public static final String CLUSTERS_DIRECTORY = ARFF_DIRECTORY + File.separator + "clusters";
+	
 	public static boolean exists(String d) {
     	File dir = new File(d);
     	
