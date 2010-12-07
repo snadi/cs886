@@ -68,6 +68,8 @@ public class FeatureExtractor {
 				path.features().get(FeatureName.THROWS).incrementCount(countThrow(unit));
 			}
 		}
+		
+		
 	}
 	
 	private static int countEqual(Unit unit) {
