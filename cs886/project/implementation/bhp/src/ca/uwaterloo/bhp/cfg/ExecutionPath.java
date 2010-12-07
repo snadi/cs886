@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import ca.uwaterloo.bhp.feature.Feature;
-import ca.uwaterloo.bhp.feature.FeatureName;
-
 import soot.toolkits.graph.Block;
 import weka.core.Attribute;
 import weka.core.FastVector;
+import ca.uwaterloo.bhp.feature.Feature;
+import ca.uwaterloo.bhp.feature.FeatureName;
+import ca.uwaterloo.bhp.util.ClustersAverages;
 
 public class ExecutionPath {
 	
@@ -49,8 +49,6 @@ public class ExecutionPath {
 	public String featuresToString() {
 		StringBuffer str = new StringBuffer();
 		for(Feature feature : features.values()) {
-			//str.append(feature.getName());
-			//str.append("=");
 			str.append(feature.getCount());
 			str.append(", ");
 		}
@@ -64,6 +62,16 @@ public class ExecutionPath {
 			result[i++] = feature.getCount();
 		}
 		return result;
+	}
+	
+	public double getHotProbability() {
+		double prob = 1;
+		for(FeatureName featureName : features.keySet()) {
+			if(features.get(featureName).getCount() >= ClustersAverages.getHotPathAverage(featureName)) {
+				prob += featureContribution;
+			}
+		}
+		return prob;
 	}
 	
 	public static FastVector getAttributes(HashMap<FeatureName, Feature> features) {

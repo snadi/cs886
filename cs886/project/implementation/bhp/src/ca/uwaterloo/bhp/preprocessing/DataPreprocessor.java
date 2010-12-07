@@ -15,13 +15,12 @@ import ca.uwaterloo.bhp.cfg.CfgGenerator;
 import ca.uwaterloo.bhp.cfg.CfgWalker;
 import ca.uwaterloo.bhp.cfg.ExecutionPath;
 import ca.uwaterloo.bhp.feature.FeatureExtractor;
+import ca.uwaterloo.bhp.util.Directory;
 import ca.uwaterloo.bhp.weka.ArffWriter;
 
 public class DataPreprocessor {
 	
-	public static final String INPUT_DIRECTORY = System.getProperty("user.dir") + File.separator + "cs886" + File.separator + "input";
-	public static final String LIBRARY_DIRECTORY = System.getProperty("user.dir") + File.separator + "cs886" + File.separator + "input" + File.separator + "lib";
-	public static final String ARFF_DIRECTORY = System.getProperty("user.dir") + File.separator + "cs886" + File.separator + "arff";
+	public static final int[] cfgThresholds = new int[]{10, 20, 30, 40}; 
 	
 	public static void run() throws IOException {
 		// Reset Soot
@@ -31,11 +30,10 @@ public class DataPreprocessor {
 		NoSearchingClassProvider provider = new NoSearchingClassProvider();
 		
 		// Fetch the input files
-		for(File file : new File(INPUT_DIRECTORY).listFiles()) {
+		for(File file : new File(Directory.INPUT_DIRECTORY).listFiles()) {
     		if(file.getName().endsWith(".jar") || file.getName().endsWith(".zip")) {
     	        System.out.println("Adding archive: " + file.getName());
     	        provider.addArchive(file);
-    	        //provider.addArchiveForResolving(file);
     		} else if (file.getName().endsWith(".class")) {
     			System.out.println("Adding file: " + file.getName());
     	        provider.addClass(file);
@@ -43,7 +41,7 @@ public class DataPreprocessor {
     	}
 		
 		// Fetch all library jars
-		for(File file : new File(LIBRARY_DIRECTORY).listFiles()) {
+		for(File file : new File(Directory.LIBRARY_DIRECTORY).listFiles()) {
 			provider.addArchiveForResolving(file);
     	}
 		
@@ -54,8 +52,6 @@ public class DataPreprocessor {
 		Collection<SootClass> classes = new ArrayList<SootClass>();
 	    for(String className : provider.getClassNames()) {
 	    	scene.loadClass(className, SootClass.SIGNATURES);
-	    	//scene.loadClassAndSupport(className);
-	    	//scene.loadNecessaryClasses();
 	    	SootClass c = scene.loadClass(className, SootClass.BODIES);
 	    	c.setApplicationClass();
 	    	classes.add(c);
@@ -65,9 +61,11 @@ public class DataPreprocessor {
 	    scene.loadNecessaryClasses();
 
 		// Generate the features
-		generateFeatures(classes, 20);
-		
-		
+		//for(int cfgThreshold : cfgThresholds) {
+		//	generateFeatures(classes, cfgThreshold);
+		//	System.out.println("Observations for " + cfgThreshold + " nodes generated.");
+		//}
+		generateFeatures(classes, 50);
 	}
 	
 	private static void generateFeatures(Collection<SootClass> inputClasses, int cfgNodeThreshold) throws IOException {
@@ -84,7 +82,7 @@ public class DataPreprocessor {
 		}
 		
 		if(paths.size() > 0) {
-			ArffWriter writer = new ArffWriter(ARFF_DIRECTORY, "observations", paths);
+			ArffWriter writer = new ArffWriter(Directory.OBSERVATIONS_DIRECTORY, cfgNodeThreshold, paths);
 			writer.write();
 		}
 	}
