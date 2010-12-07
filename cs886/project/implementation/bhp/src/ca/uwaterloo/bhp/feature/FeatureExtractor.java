@@ -1,7 +1,9 @@
-package ca.uwaterloo.bhp.cfg;
+package ca.uwaterloo.bhp.feature;
 
 import java.util.Iterator;
 import java.util.List;
+
+import ca.uwaterloo.bhp.cfg.ExecutionPath;
 
 import soot.Local;
 import soot.Unit;

@@ -1,4 +1,4 @@
-package ca.uwaterloo.bhp.cfg;
+package ca.uwaterloo.bhp.feature;
 
 public class Feature {
 	

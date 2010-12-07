@@ -35,5 +35,4 @@ public class CfgGenerator {
 		
 		return result;
 	}
-
 }

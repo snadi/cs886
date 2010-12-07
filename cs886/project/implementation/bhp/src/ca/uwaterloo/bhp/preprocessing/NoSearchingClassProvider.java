@@ -1,16 +1,16 @@
 package ca.uwaterloo.bhp.preprocessing;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
-import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set ;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -34,6 +34,8 @@ public class NoSearchingClassProvider implements ClassProvider {
 
   private Map<String, Resource> _classes;
   private List<ZipFile> _archives;
+  
+  
 
   public NoSearchingClassProvider() {
     _classes = new HashMap<String, Resource>();
@@ -151,7 +153,7 @@ public class NoSearchingClassProvider implements ClassProvider {
 		  }
 	  }
   }
-
+  
   /**
    * A resource is something to which we can open an InputStream 1 or
    * more times.

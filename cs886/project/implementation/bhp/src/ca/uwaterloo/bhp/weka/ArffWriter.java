@@ -3,6 +3,7 @@ package ca.uwaterloo.bhp.weka;
 import java.io.IOException;
 import java.util.Collection;
 
+import weka.core.Attribute;
 import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -34,11 +35,16 @@ public class ArffWriter extends ArffSaver {
 		int capacity = executionPaths.size();
 		
 		instances = new Instances(relationName, attributeInfo, capacity);
+		instances.setClass((Attribute)attributeInfo.lastElement());
 		
 		for(ExecutionPath path : executionPaths) {
 			Instance instance = new Instance(1, path.featuresToArray());
+			instance.setDataset(instances);
+			instance.setClassMissing();
 			instances.add(instance);
 		}
+		
+		setInstances(instances);
 	}
 	
 	public void write() throws IOException {
@@ -48,5 +54,4 @@ public class ArffWriter extends ArffSaver {
 	public Instances instances() {
 		return instances;
 	}
-
 }

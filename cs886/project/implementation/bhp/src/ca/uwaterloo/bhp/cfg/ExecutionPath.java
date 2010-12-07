@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import ca.uwaterloo.bhp.feature.Feature;
+import ca.uwaterloo.bhp.feature.FeatureName;
+
 import soot.toolkits.graph.Block;
 import weka.core.Attribute;
 import weka.core.FastVector;
@@ -12,6 +15,8 @@ public class ExecutionPath {
 	
 	private HashMap<FeatureName, Feature> features;
 	private Collection<Block> blocks;
+	
+	private static final double featureContribution = 1d / FeatureName.values().length;
 	
 	public ExecutionPath() {
 		features = new HashMap<FeatureName, Feature>();
@@ -32,7 +37,7 @@ public class ExecutionPath {
 		return blocks;
 	}
 	
-	public String pathToString() {
+	public String toString() {
 		StringBuffer str = new StringBuffer();
 		for(Block b : blocks) {
 			str.append(b.getIndexInMethod());
@@ -53,7 +58,7 @@ public class ExecutionPath {
 	}
 	
 	public double[] featuresToArray() {
-		double[] result = new double[features.size()];
+		double[] result = new double[features.size() + 1];
 		int i = 0;
 		for(Feature feature : features.values()) {
 			result[i++] = feature.getCount();
@@ -69,14 +74,17 @@ public class ExecutionPath {
 			attributes.addElement(new Attribute(featureName.name()));
 		}
 		
+		// Add class attribute
+		attributes.addElement(getClassAttribute());
+		return attributes;
+	}
+	
+	public static Attribute getClassAttribute() {
 		// Add the nominal attribute "class"
 		FastVector nominalValues = new FastVector(2);
 		nominalValues.addElement("hot");
 		nominalValues.addElement("cold");
 		Attribute classification = new Attribute("class", nominalValues);
-		attributes.addElement(classification);
-		
-		return attributes;
-	}
-	
+		return classification;
+	}	
 }
