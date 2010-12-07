@@ -10,12 +10,11 @@ import soot.ClassProvider;
 import soot.G;
 import soot.Scene;
 import soot.SootClass;
-import soot.SootMethod;
 import soot.toolkits.graph.BriefBlockGraph;
 import ca.uwaterloo.bhp.cfg.CfgGenerator;
 import ca.uwaterloo.bhp.cfg.CfgWalker;
 import ca.uwaterloo.bhp.cfg.ExecutionPath;
-import ca.uwaterloo.bhp.cfg.FeatureExtractor;
+import ca.uwaterloo.bhp.feature.FeatureExtractor;
 import ca.uwaterloo.bhp.weka.ArffWriter;
 
 public class DataPreprocessor {
@@ -23,55 +22,31 @@ public class DataPreprocessor {
 	private static NoSearchingClassProvider _provider;
 	private static Scene _scene;
 	
-	public static void main(String args[]) {
-		init();
-		SootClass sc = loadClassByCanonicalName("java.lang.String");
-		
-		SootMethod m = new SootMethod("", sc.getMethodByName("charAt").getParameterTypes(), sc.getMethodByName("charAt").getReturnType());
-		for(SootMethod method : sc.getMethods()) {
-			if(method.getName().equalsIgnoreCase("charAt")) {
-				m = method;
-				break;
-			}
-		}
-		String outputDirectory = System.getProperty("user.dir") + File.separator + "cs886";
-		BriefBlockGraph cfg = CfgGenerator.generate(m);
-		
-		Collection<ExecutionPath> paths = CfgWalker.process(cfg); 
-		
-		for(ExecutionPath path : paths) {
-			//System.out.println(path.pathToString());
-			FeatureExtractor.extractFeatures(path);
-			System.out.println(path.featuresToString());
-		}
-		
-		ArffWriter writer = new ArffWriter(outputDirectory, sc.getName().replaceAll("\\.", "_"), cfg.getBody().getMethod().getNumber(), paths);
-		System.out.println(writer.instances().toString());
-	}
+	public static final String INPUT_DIRECTORY = System.getProperty("user.dir") + File.separator + "cs886" + File.separator + "input";
+	public static final String ARFF_DIRECTORY = System.getProperty("user.dir") + File.separator + "cs886" + File.separator + "arff";
 	
-	public static void run(String inputDirectory, String outputDirectory) throws IOException {
+	public static void run() throws IOException {
 		// Initialize some parameters for Soot
 		init();
 		
 		// Load the classes
-		Collection<SootClass> inputClasses = loadClasses(inputDirectory);
+		Collection<SootClass> inputClasses = loadClasses();
 		
 		// Generate the features
 		generateFeatures(inputClasses);		
 	}
 	
-	private static void generateFeatures(Collection<SootClass> inputClasses) {
-		// For each soot class, generate cfgs for its methods, and process them
+	private static void generateFeatures(Collection<SootClass> inputClasses) throws IOException {
+		// For each soot class, generate control flow graphs for its methods, and process them
 		for(SootClass sc : inputClasses){
 			for(BriefBlockGraph cfg : CfgGenerator.generate(sc)){
 				Collection<ExecutionPath> paths = CfgWalker.process(cfg);
-				sc.getName();
-				cfg.getBody().getMethod().getName();
 				for(ExecutionPath path : paths) {
-					//System.out.println(path.pathToString());
 					FeatureExtractor.extractFeatures(path);
-					System.out.println(path.featuresToString());
 				}
+				
+				ArffWriter writer = new ArffWriter(ARFF_DIRECTORY, sc.getName().replaceAll("\\.", "_"), cfg.getBody().getMethod().getNumber(), paths);
+				writer.write();
 			}
 		}
 	}
@@ -89,9 +64,9 @@ public class DataPreprocessor {
 		// Load SootClasses for the input files
 		Collection<SootClass> classes = new ArrayList<SootClass>();
 	    for(String className : _provider.getClassNames()) {
-	    	_scene.loadClass(className, SootClass.SIGNATURES);
 	    	//_scene.loadClassAndSupport(className);
 	    	SootClass sc = _scene.loadClass(className, SootClass.BODIES);
+	    	_scene.loadNecessaryClasses();
 	    	sc.setApplicationClass();
 	    	classes.add(sc);
 	    }
@@ -105,13 +80,13 @@ public class DataPreprocessor {
 		return classes;
 	}
 	
-	private static Collection<SootClass> loadClasses(String inputDirectory) throws IOException {
+	private static Collection<SootClass> loadClasses() throws IOException {
 		// Fetch the input files
-		for(File file : new File(inputDirectory).listFiles()) {
+		for(File file : new File(INPUT_DIRECTORY).listFiles()) {
     		if(file.getName().endsWith(".jar") || file.getName().endsWith(".zip")) {
     	        System.out.println("Adding archive: " + file.getName());
     	        _provider.addArchive(file);
-    		} else if (file.getName().endsWith(".java") || file.getName().endsWith(".class")) {
+    		} else if (file.getName().endsWith(".class")) {
     			System.out.println("Adding file: " + file.getName());
     	        _provider.addClass(file);
     		}
