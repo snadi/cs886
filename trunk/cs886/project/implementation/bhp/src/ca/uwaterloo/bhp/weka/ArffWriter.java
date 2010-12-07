@@ -31,7 +31,7 @@ public class ArffWriter extends ArffSaver {
 	
 	private void createInstances() {
 		String relationName = retrieveFile().getName();		
-		FastVector attributeInfo = ExecutionPath.getAttributes(executionPaths.iterator().next().features());
+		FastVector attributeInfo = executionPaths.iterator().next().getAttributes();
 		int capacity = executionPaths.size();
 		
 		instances = new Instances(relationName, attributeInfo, capacity);
@@ -40,7 +40,7 @@ public class ArffWriter extends ArffSaver {
 		for(ExecutionPath path : executionPaths) {
 			Instance instance = new Instance(1, path.featuresToArray());
 			instance.setDataset(instances);
-			instance.setClassMissing();
+			instance.setClassValue(path.getHotProbability());
 			instances.add(instance);
 		}
 		

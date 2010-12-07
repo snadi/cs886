@@ -1,0 +1,74 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.BayesNet -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 5 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+Relation:     observations_10.arff
+Instances:    2087
+Attributes:   13
+              THROWS
+              DEREFERNCES
+              NEW
+              STATEMENTS
+              INVOCATIONS
+              GOTO
+              LOCALS
+              EQUAL
+              IF
+              FIELDS_WRITTEN
+              FIELDS
+              ASSIGNMENTS
+              class
+Test mode:    user supplied test set:  size unknown (reading incrementally)
+
+=== Classifier model (full training set) ===
+
+Bayes Network Classifier
+not using ADTree
+#attributes=13 #classindex=12
+Network structure (nodes followed by parents)
+THROWS(1): class 
+DEREFERNCES(4): class 
+NEW(3): class DEREFERNCES 
+STATEMENTS(3): class NEW DEREFERNCES 
+INVOCATIONS(3): class STATEMENTS NEW DEREFERNCES 
+GOTO(3): class DEREFERNCES INVOCATIONS STATEMENTS 
+LOCALS(4): class STATEMENTS INVOCATIONS 
+EQUAL(3): class GOTO DEREFERNCES 
+IF(3): class GOTO EQUAL 
+FIELDS_WRITTEN(2): class DEREFERNCES IF 
+FIELDS(4): class DEREFERNCES FIELDS_WRITTEN 
+ASSIGNMENTS(3): class LOCALS DEREFERNCES FIELDS_WRITTEN 
+class(2): 
+LogScore Bayes: -8996.668800884947
+LogScore BDeu: -12106.361385634264
+LogScore MDL: -11832.634651612501
+LogScore ENTROPY: -9168.880858496103
+LogScore AIC: -9865.880858496103
+
+
+Time taken to build model: 0.2 seconds
+
+=== Evaluation on test set ===
+=== Summary ===
+
+Correctly Classified Instances        3922               82.4989 %
+Incorrectly Classified Instances       832               17.5011 %
+Kappa statistic                          0.6091
+Mean absolute error                      0.1858
+Root mean squared error                  0.3809
+Relative absolute error                 62.3288 %
+Root relative squared error             78.9726 %
+Total Number of Instances             4754     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.797     0.097      0.958     0.797     0.87       0.922    hot
+                 0.903     0.203      0.616     0.903     0.732      0.922    cold
+Weighted Avg.    0.825     0.125      0.867     0.825     0.834      0.922
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 2784  710 |    a = hot
+  122 1138 |    b = cold
+

@@ -16,7 +16,12 @@ public class ExecutionPath {
 	private HashMap<FeatureName, Feature> features;
 	private Collection<Block> blocks;
 	
+	private static final String HOT = "hot";
+	private static final String COLD = "cold";
+	
 	private static final double featureContribution = 1d / FeatureName.values().length;
+	
+	private Attribute classAttribute;
 	
 	public ExecutionPath() {
 		features = new HashMap<FeatureName, Feature>();
@@ -27,6 +32,12 @@ public class ExecutionPath {
 		}
 		
 		blocks = new ArrayList<Block>();
+		
+		// Create the nominal attribute "class"
+		FastVector nominalValues = new FastVector(2);
+		nominalValues.addElement(HOT);
+		nominalValues.addElement(COLD);
+		classAttribute = new Attribute("class", nominalValues);
 	}
 
 	public HashMap<FeatureName, Feature> features() {
@@ -65,16 +76,17 @@ public class ExecutionPath {
 	}
 	
 	public double getHotProbability() {
-		double prob = 1;
+		double prob = 0;
 		for(FeatureName featureName : features.keySet()) {
 			if(features.get(featureName).getCount() >= ClustersAverages.getHotPathAverage(featureName)) {
 				prob += featureContribution;
 			}
 		}
-		return prob;
+		// The less feature contribution a path has, the more hot the path is
+		return (prob <= 0.5 ? classAttribute.indexOfValue(HOT) : classAttribute.indexOfValue(COLD));
 	}
 	
-	public static FastVector getAttributes(HashMap<FeatureName, Feature> features) {
+	public FastVector getAttributes() {
 		FastVector attributes = new FastVector(features.size() + 1);
 		
 		// Add attributes for all features
@@ -83,16 +95,7 @@ public class ExecutionPath {
 		}
 		
 		// Add class attribute
-		attributes.addElement(getClassAttribute());
+		attributes.addElement(classAttribute);
 		return attributes;
 	}
-	
-	public static Attribute getClassAttribute() {
-		// Add the nominal attribute "class"
-		FastVector nominalValues = new FastVector(2);
-		nominalValues.addElement("hot");
-		nominalValues.addElement("cold");
-		Attribute classification = new Attribute("class", nominalValues);
-		return classification;
-	}	
 }

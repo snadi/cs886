@@ -60,12 +60,20 @@ public class DataPreprocessor {
 	    addCommonDynamicClasses(scene, provider);
 	    scene.loadNecessaryClasses();
 
-		// Generate the features
-		//for(int cfgThreshold : cfgThresholds) {
-		//	generateFeatures(classes, cfgThreshold);
-		//	System.out.println("Observations for " + cfgThreshold + " nodes generated.");
-		//}
+		// Generate the training sets
+	    //generateFeatures(classes, 10, false);
+//		for(int cfgThreshold : cfgThresholds) {
+//			long startTime = System.currentTimeMillis();
+//			generateFeatures(classes, cfgThreshold);
+//			System.out.println("Observations for " + cfgThreshold + " nodes generated.");
+//			System.out.println("It took " + (System.currentTimeMillis() - startTime) + " to finish.");
+//		}
+
+		// Generate test set
+		long startTime = System.currentTimeMillis();
 		generateFeatures(classes, 50);
+		System.out.println("Test dataset generated.");
+		System.out.println("It took " + (System.currentTimeMillis() - startTime) + " to finish.");
 	}
 	
 	private static void generateFeatures(Collection<SootClass> inputClasses, int cfgNodeThreshold) throws IOException {
