@@ -17,12 +17,11 @@ public class ArffWriter extends ArffSaver {
 	private Collection<ExecutionPath> executionPaths;
 	private Instances instances;
 
-	public ArffWriter(String dir, String className, int methodName, Collection<ExecutionPath> executionPaths) {
+	public ArffWriter(String dir, String className, Collection<ExecutionPath> executionPaths) {
 		super();
 		setFileExtension(Instances.FILE_EXTENSION);
 		setDir(dir);
-		setFilePrefix(className);
-		setDirAndPrefix(String.valueOf(methodName), "");
+		setDirAndPrefix(className, "");
 		this.executionPaths = executionPaths;
 		
 		// Create the instances based on the execution paths

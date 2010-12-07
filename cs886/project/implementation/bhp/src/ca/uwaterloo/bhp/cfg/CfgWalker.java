@@ -21,7 +21,6 @@ public class CfgWalker {
 			
 			result.addAll(allPaths);
 		}
-		
 		return result;
 	}
 
