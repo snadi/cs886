@@ -61,13 +61,12 @@ public class DataPreprocessor {
 	    scene.loadNecessaryClasses();
 
 		// Generate the training sets
-	    //generateFeatures(classes, 10, false);
-//		for(int cfgThreshold : cfgThresholds) {
-//			long startTime = System.currentTimeMillis();
-//			generateFeatures(classes, cfgThreshold);
-//			System.out.println("Observations for " + cfgThreshold + " nodes generated.");
-//			System.out.println("It took " + (System.currentTimeMillis() - startTime) + " to finish.");
-//		}
+		for(int cfgThreshold : cfgThresholds) {
+			long startTime = System.currentTimeMillis();
+			generateFeatures(classes, cfgThreshold);
+			System.out.println("Observations for " + cfgThreshold + " nodes generated.");
+			System.out.println("It took " + (System.currentTimeMillis() - startTime) + " to finish.");
+		}
 
 		// Generate test set
 		long startTime = System.currentTimeMillis();
