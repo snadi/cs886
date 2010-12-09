@@ -277,7 +277,7 @@
                             \@IEEEusingAfourpaperfalse
                             \def\CLASSOPTIONpaper{letter}%
                             \def\CLASSINFOpaperwidth{8.5in}%
-                            \def\CLASSINFOpaperheight{11in}}                         
+                            \def\CLASSINFOpaperheight{11in}}
 
 
 \DeclareOption{a4paper}{\setlength{\paperheight}{297mm}%
