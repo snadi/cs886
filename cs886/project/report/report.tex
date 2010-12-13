@@ -29,7 +29,7 @@ University of Waterloo\\
 \thispagestyle{empty}
 
 \begin{abstract}
-Detecting commonly executed program paths (i.e. hot paths) is very essential for many program analyeses. It is always advisable to perform code optimizations
+Detecting commonly executed program paths (i.e. hot paths) is very essential for many program analyses. It is always advisable to perform code optimizations
 to those hot paths. Buse and Weimer \cite{buse2009road} suggest an approach that uses static path information to build a Bayesian network that can infer the
 class (hot or cold) of a given path under the assumption that a hot path has minimal effect on the program state. In this project, we propose a modified version
 of this approach by enumerating static paths for each individual method. We then evaluate our model using the SPECjvm2008 \cite{specjvm2008} benchmarks. Our
@@ -76,10 +76,9 @@ cluster the statically enumerated paths using a simple k-means clusterer into tw
 truth. Afterwards, we train a Bayesian network using one training dataset, and test four different test datasets against it. Second, we evaluate our model using
 the more recent SPECjvm2008 \cite{specjvm2008} benchmarks as opposed to the obsolete SPECjvm98 \cite{specjvm98} benchmarks.
 
-The rest of the report is structured as follows. In Section \ref{sec:motivation}, we present a motivating example. We then discuss related work in Section
-\ref{sec:bg}. In Section \ref{sec:implementation}, we provide an in depth discussion for the implementation details of our model. We provide our the
-experimental results of our model in Section \ref{sec:results} followed by discussion and some proposed future work in Section \ref{sec:difficulties}.
-Finally, we conclude the report in Section \ref{sec:conc}.
+The rest of the report is structured as follows. We discuss related work in Section \ref{sec:bg}. In Section \ref{sec:implementation}, we provide an in depth
+discussion for the implementation details of our model. We then provide our the experimental results of our model in Section \ref{sec:results} followed by
+discussion and some proposed future work in Section \ref{sec:difficulties}. Finally, we conclude the report in Section \ref{sec:conc}.
 
 \section{Related Work}
 \label{sec:bg}
@@ -90,7 +89,7 @@ workloads (profile-based branch prediction) or inferred statically from the cont
 Ball and Larus \cite{ball1993branch} present a program-based branch predictor that performs well for a large and diverse set of programs written in C and
 Fortran. The core of their model is based on simple heuristics for predicting non-loop branches, which dominate the dynamic branch count of many programs.
 A more recent study shows that those heuristics achieve an average of 70\% prediction rate with 33\% miss rate \cite{calder1997evidence}. The same study
-further extends those heuristics by using a richer static feature set and epmloying neural network learning techniques. The authors were able to decrease
+further extends those heuristics by using a richer static feature set and employing neural network learning techniques. The authors were able to decrease
 the miss rate to an average of 21\% but this came at the cost of decreasing the prediction rate to an average of 50\%.
 
 Focusing only on branch edge information is not useful for hot path identification. Analyzing the whole execution path provides a richer set of information
@@ -98,11 +97,11 @@ than individual branch edge information \cite{buse2009road}. Thus, it is more us
 opted for in this project.
 
 Our work is inspired by the work of Buse and Weimer \cite{buse2009road} where they present a technique for statically estimating the runtime frequency of
-program paths. The results of such technique can be used to support or improve many types of static program analyeses. The authors report an accuracy of 90\%
+program paths. The results of such technique can be used to support or improve many types of static program analyses. The authors report an accuracy of 90\%
 for their model. However, they do not report on their miss rates. Moreover, they do not provide any details as to how they built the Bayesian network used for
 prediction or the precision and the recall values recorded for each experiment. In addition, the authors use workloads automatically generated from the
 SPECjvm98 benchmarks \cite{specjvm98} to get the ground truth for path execution frequency to train and evaluate their model. This defies one of their major
-goals, attempting to model indicative execution frequency by avoiding the useage of automatically generated workloads. In this work, we only depend on
+goals, attempting to model indicative execution frequency by avoiding the usage of automatically generated workloads. In this work, we only depend on
 information gathered from statically enumerated execution paths and do not make use of automatically generated workloads.
 
 \section{Model Construction}
@@ -114,7 +113,7 @@ description, path enumeration, dataset generation, and finally the construction 
 approach supports Java, but the model still applies to other imperative languages.
 
 \subsection{Path Description Model}
-As mentioned earlier, we adpot a similar path description model to the one proposed by Buse and Weimer \cite{buse2009road}. However, we apply some modifications
+As mentioned earlier, we adopt a similar path description model to the one proposed by Buse and Weimer \cite{buse2009road}. However, we apply some modifications
 to the path description model to comply with our definition of a path. We define a path as an execution path for a given method that can be statically
 enumerated from the control flow graph of that method. Consequently, we do not take into consideration features like \textit{this} and \textit{return
 statements} from their model \cite{buse2009road} because these features do not reveal more information in the context of a method. Any given method has a
@@ -163,7 +162,7 @@ We use the Soot \cite{vallee1999soot} APIs to analyze the input source code, and
 given method, we generate its control flow graph, then apply a modified version of the depth-first search algorithm to the graph to enumerate potential paths.
 Algorithms \ref{alg:process} and \ref{alg:search} show a pseudo-code for the algorithm used to enumerate the paths for a given control flow graph, and paths
 starting at a given block in the graph respectively. We assume that a path through a loop construct represents all paths that take the loop once or more. This
-prevents the generation of an ubounded number of potential paths. Each path is represented as a stack of basic blocks, where each basic block is sequence of
+prevents the generation of an unbounded number of potential paths. Each path is represented as a stack of basic blocks, where each basic block is sequence of
 source code statements.
 
 \begin{algorithm}[h!]
@@ -218,13 +217,13 @@ sharing a set of attributes \cite{arff}.
 \label{dataset-generation}
 Generating an indicative dataset of execution paths is not an easy task. One has to develop (or gather) real life applications and analyze them to compile such
 a dataset. SPECjvm2008 \cite{specjvm2008}, fortunately, already provides a benchmark suite for measuring the performance of a Java Runtime Environment (JRE),
-containing several real life applications and benchmarks (e.g. derby, javac, crypto, xml) focusing on core java functionality. This dataset was compiled
+containing several real life applications and benchmarks (e.g. derby, javac, crypto, xml) focusing on core Java functionality. This dataset was compiled
 to be used instead of the obsolete SPECjvm98 \cite{specjvm98} used in \cite{buse2009road}.
 
 As with any learning algorithm, we had to divide our dataset into a training set, and a test set. We limit our training set to all paths generated from control
 flow graphs that have at most 10 nodes (i.e. basic blocks). On the other hand, we generate four test sets each consists of all paths generated from
 control flow graphs that have, 10-20, 20-30, 30-40, and 40-50 nodes respectively. We could not go beyond that number of nodes per control flow graph due to the
-limited RAM we have on our machine (1GB). This was also another reason why we had to split the dataset into 5 subsets, one used as a training dataset, and the
+limited RAM we have on our machine (1 GB). This was also another reason why we had to split the dataset into 5 subsets, one used as a training dataset, and the
 others as test datasets.
 
 \begin{table}[h!]
@@ -345,7 +344,7 @@ dataset. All experiments model our problem as a classification problem, i.e. lab
 
 \subsection{Experimental Setup}
 As mentioned earlier, we used the Soot \cite{vallee1999soot} APIs to implement the algorithms described in Section \ref{sec:implementation}, and WEKA
-\cite{hall2009weka} APIs and Explorer GUI for machine learning. We ran all our experiments on an HP laptop with Intel Centrino Duo 2.0 processer, 1GB RAM,
+\cite{hall2009weka} APIs and Explorer GUI for machine learning. We ran all our experiments on an HP laptop with Intel Centrino Duo 2.0 processor, 1GB RAM,
 running Ubuntu 10.10 (Maverick) with 2.6.3.23 kernel version.
 
 \subsection{Results}
@@ -363,7 +362,7 @@ for various test datasets. The best recall value (0.909) is achieved using Test-
 using Test-20. Figure \ref{fig:precision-recall} compares the precision and recall values for each test dataset. Table \ref{tab:fmeasure} reports the F-measure
 values for each test dataset.
 
-We were very intruiged by the fact that Test-40 achieved the best possible tradeoff between precision and recall (Figure \ref{fig:precision-recall}), and the
+We were very intrigued by the fact that Test-40 achieved the best possible tradeoff between precision and recall (Figure \ref{fig:precision-recall}), and the
 highest F-measure (Table \ref{tab:fmeasure}). This observation needs more thorough investigation to be able to arrive at the reasons why this specific test
 dataset achieves such high scores. However, our intuition is that for Test-20 and Test-30 the model probably overfits the Training dataset which consists of
 only 2087 instances as opposed to 2667 and 6730 instances in the case of Test-20 and Test-30 respectively (Table \ref{tab:no-class}). When we use a test dataset
@@ -427,8 +426,8 @@ capable of predicting the probability that a given path is hot. We modified the 
 execution paths after applying two main modifications to it. First, we enumerate static paths for each individual method. Second, we evaluate our model using
 the more recent SPECjvm2008 \cite{specjvm2008} benchmarks as opposed to the obsolete SPECjvm98 \cite{specjvm98} benchmarks. Our experiments have shown that our
 model achieves the best precision/recall tradeoff when using Training as the training dataset, and Test-40 as the test dataset. In the worst case (i.e. using
-Test-20 as the test dataset), our model achieves a precision of 0.845 and a recall of 0.735. In the future, it would be useful to investigate with other
-benchmarks to check whether our model suffers from overfitting or not. Finally, we are curious to know the effect of using the ground truth obtianed from
+Test-20 as the test dataset), our model achieves a precision of 0.845 and a recall of 0.735. In the future, it would be useful to investigate other benchmarks
+to check whether our model suffers from overfitting or not. Finally, we are curious to know the effect of using the ground truth obtained from
 real-life program traces as opposed to our clustering technique.
 
 {\small
