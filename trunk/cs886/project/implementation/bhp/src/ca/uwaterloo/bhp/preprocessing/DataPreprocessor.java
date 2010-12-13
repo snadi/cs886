@@ -20,7 +20,7 @@ import ca.uwaterloo.bhp.weka.ArffWriter;
 
 public class DataPreprocessor {
 	
-	public static final int[] cfgThresholds = new int[]{10, 20, 30, 40}; 
+	public static final int[] cfgThresholds = new int[]{10, 20, 30, 40, 50}; 
 	
 	public static void run() throws IOException {
 		// Reset Soot
@@ -60,36 +60,40 @@ public class DataPreprocessor {
 	    addCommonDynamicClasses(scene, provider);
 	    scene.loadNecessaryClasses();
 
-		// Generate the training sets
+		// Generate the datasets
 		for(int cfgThreshold : cfgThresholds) {
 			long startTime = System.currentTimeMillis();
 			generateFeatures(classes, cfgThreshold);
 			System.out.println("Observations for " + cfgThreshold + " nodes generated.");
 			System.out.println("It took " + (System.currentTimeMillis() - startTime) + " to finish.");
 		}
-
-		// Generate test set
-		long startTime = System.currentTimeMillis();
-		generateFeatures(classes, 50);
-		System.out.println("Test dataset generated.");
-		System.out.println("It took " + (System.currentTimeMillis() - startTime) + " to finish.");
 	}
 	
 	private static void generateFeatures(Collection<SootClass> inputClasses, int cfgNodeThreshold) throws IOException {
 		// For each soot class, generate control flow graphs for its methods, and process them
-		Collection<ExecutionPath> paths = new ArrayList<ExecutionPath>();
+		Collection<ExecutionPath> trainingPaths = new ArrayList<ExecutionPath>();
+		Collection<ExecutionPath> testPaths = new ArrayList<ExecutionPath>();
 		for(SootClass sc : inputClasses){
 			for(BriefBlockGraph cfg : CfgGenerator.generate(sc)){
 				if(cfg.size() > cfgNodeThreshold) continue;
 				for(ExecutionPath path : CfgWalker.process(cfg)) {
 					FeatureExtractor.extractFeatures(path);
-					paths.add(path);
+					if(cfg.size() > 10) {
+						testPaths.add(path);
+					} else if(cfgNodeThreshold == 10){
+						trainingPaths.add(path);
+					}
 				}
 			}
 		}
 		
-		if(paths.size() > 0) {
-			ArffWriter writer = new ArffWriter(Directory.OBSERVATIONS_DIRECTORY, cfgNodeThreshold, paths);
+		if(trainingPaths.size() > 0) {
+			ArffWriter writer = new ArffWriter(Directory.OBSERVATIONS_DIRECTORY, "training", cfgNodeThreshold, trainingPaths);
+			writer.write();
+		}
+		
+		if(testPaths.size() > 0) {
+			ArffWriter writer = new ArffWriter(Directory.OBSERVATIONS_DIRECTORY, "test", cfgNodeThreshold, testPaths);
 			writer.write();
 		}
 	}

@@ -1,0 +1,56 @@
+=== Run information ===
+
+Scheme:       weka.clusterers.SimpleKMeans -N 2 -A "weka.core.EuclideanDistance -R first-last" -I 500 -S 10
+Relation:     test_50.arff
+Instances:    143078
+Attributes:   13
+              INVOCATIONS
+              ASSIGNMENTS
+              STATEMENTS
+              EQUAL
+              GOTO
+              IF
+              FIELDS
+              FIELDS_WRITTEN
+              LOCALS
+              DEREFERNCES
+              NEW
+              THROWS
+Ignored:
+              class
+Test mode:    evaluate on training data
+
+=== Model and evaluation on training set ===
+
+
+kMeans
+======
+
+Number of iterations: 9
+Within cluster sum of squared errors: 18931.317164839074
+Missing values globally replaced with mean/mode
+
+Cluster centroids:
+                              Cluster#
+Attribute         Full Data          0          1
+                   (143078)    (34917)   (108161)
+=================================================
+INVOCATIONS          68.657    40.7381    77.6699
+ASSIGNMENTS         93.9337    56.5917   105.9886
+STATEMENTS         144.1602    88.2042   162.2241
+EQUAL               12.1599    13.8748    11.6063
+GOTO                 23.729    23.5838    23.7758
+IF                  19.6107      19.88    19.5238
+FIELDS               16.193    10.5063    18.0289
+FIELDS_WRITTEN       3.4787     2.4874     3.7988
+LOCALS             229.6578   132.9246   260.8856
+DEREFERNCES          19.571    13.8164    21.4287
+NEW                 14.0184     2.6921    17.6747
+THROWS               0.0021     0.0088          0
+
+
+Clustered Instances
+
+0       34917 ( 24%)
+1      108161 ( 76%)
+

@@ -1,10 +1,26 @@
+No Classification.
+Adding archive: SPECjvm2008.jar
 Observations for 10 nodes generated.
-It took 7202 to finish.
+It took 619 to finish.
 Observations for 20 nodes generated.
-It took 1243 to finish.
+It took 1130 to finish.
 Observations for 30 nodes generated.
-It took 2458 to finish.
+It took 2342 to finish.
 Observations for 40 nodes generated.
-It took 48564 to finish.
-Test dataset generated.
-It took 100985 to finish.
+It took 47461 to finish.
+Observations for 50 nodes generated.
+It took 92895 to finish.
+
+
+With Classification
+Adding archive: SPECjvm2008.jar
+Observations for 10 nodes generated.
+It took 623 to finish.
+Observations for 20 nodes generated.
+It took 1151 to finish.
+Observations for 30 nodes generated.
+It took 2340 to finish.
+Observations for 40 nodes generated.
+It took 47903 to finish.
+Observations for 50 nodes generated.
+It took 105272 to finish.
