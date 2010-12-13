@@ -17,19 +17,19 @@ public class ArffWriter extends ArffSaver {
 	private Collection<ExecutionPath> executionPaths;
 	private Instances instances;
 
-	public ArffWriter(String dir, int threshold, Collection<ExecutionPath> executionPaths) {
+	public ArffWriter(String dir, String prefix, int cfgNodeThreshold, Collection<ExecutionPath> executionPaths) {
 		super();
 		setFileExtension(Instances.FILE_EXTENSION);
 		setDir(dir);
-		setFilePrefix("observations");
-		setDirAndPrefix(Integer.toString(threshold), "");
+		setFilePrefix(prefix);
+		setDirAndPrefix(Integer.toString(cfgNodeThreshold), "");
 		this.executionPaths = executionPaths;
 		
 		// Create the instances based on the execution paths
-		createInstances();
+		createInstances(cfgNodeThreshold);
 	}
 	
-	private void createInstances() {
+	private void createInstances(int cfgNodeThreshold) {
 		String relationName = retrieveFile().getName();		
 		FastVector attributeInfo = executionPaths.iterator().next().getAttributes();
 		int capacity = executionPaths.size();
@@ -40,7 +40,8 @@ public class ArffWriter extends ArffSaver {
 		for(ExecutionPath path : executionPaths) {
 			Instance instance = new Instance(1, path.featuresToArray());
 			instance.setDataset(instances);
-			instance.setClassValue(path.getHotProbability());
+			//instance.setClassValue(path.isHot(cfgNodeThreshold));
+			instance.setClassMissing();
 			instances.add(instance);
 		}
 		

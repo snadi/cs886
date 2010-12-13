@@ -75,10 +75,10 @@ public class ExecutionPath {
 		return result;
 	}
 	
-	public double getHotProbability() {
+	public double isHot(int cfgNodeThreshold) {
 		double prob = 0;
 		for(FeatureName featureName : features.keySet()) {
-			if(features.get(featureName).getCount() >= ClustersAverages.getHotPathAverage(featureName)) {
+			if(features.get(featureName).getCount() >= ClustersAverages.getHotPathAverage(featureName, cfgNodeThreshold)) {
 				prob += featureContribution;
 			}
 		}
